@@ -1,15 +1,12 @@
-//zod configurations
-import zod from "zod"
+import { z } from "zod";
 
-//user signup zod 
-export const signUpBody = zod.object({
-    email:zod.string().email(),
-    password:zod.string(),
-    name:zod.string(),
-})
+export const signUpBody = z.object({
+    name: z.string().min(1, "Name is required"),
+    email: z.string().email("Invalid email"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+});
 
-//user signin zod
-export const signInBody = zod.object({
-    email:zod.string().email(),
-    password:zod.string(),
-})
+export const signInBody = z.object({
+    email: z.string().email("Invalid email"),
+    password: z.string().min(6, "Password must be at least 6 characters"),
+});
