@@ -43,9 +43,8 @@ const TopicSchema = new Schema({
 });
 
 // Exporting models
-module.exports = {
-  User: mongoose.model('User', UserSchema),
-  Resource: mongoose.model('Resource', ResourceSchema),
-  PendingResource: mongoose.model('PendingResource', PendingResourceSchema),
-  Topic: mongoose.model('Topic', TopicSchema),
-};
+
+  export const User = mongoose.model('User', UserSchema);
+  export const Resource = mongoose.model('Resource', ResourceSchema);
+  export const PendingResource = mongoose.model('PendingResource', PendingResourceSchema);
+  export const Topic = mongoose.model('Topic', TopicSchema);
