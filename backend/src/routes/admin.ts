@@ -2,14 +2,15 @@ import express from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import {  User } from "../db/db";  
-import { JWT_SECRET as  JWT_USER_PASSWORD } from "../config/config";
-import { signInBody, signUpBody } from "../zod"; 
+import { ADMIN_SECRET as  JWT_ADMIN_SECRET } from "../config/config";
+import { adminSignin, adminSignup} from "../zod";
+import { ADMIN_PASSWORD } from "../config/config";
 
-export const UserRouter = express.Router();
+export const AdminRouter = express.Router();
 
 // Signup route
-UserRouter.post("/signup", async (req:any, res:any) => {
-    const { success, error } = signUpBody.safeParse(req.body);
+AdminRouter.post("/signup", async (req:any, res:any) => {
+    const { success, error } = adminSignup.safeParse(req.body);
 
     if (!success) {
         return res.status(400).json({
@@ -18,7 +19,7 @@ UserRouter.post("/signup", async (req:any, res:any) => {
         });
     }
 
-    const { name, email, password } = req.body;
+    const { name, email, password,adminPassword } = req.body;
 
     try {
         // Check if user already exists
@@ -30,6 +31,12 @@ UserRouter.post("/signup", async (req:any, res:any) => {
             });
         }
 
+        if(adminPassword!==ADMIN_PASSWORD){
+            return res.status(403).json({
+                message:"Invalid admin password"
+            })
+        }
+
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -38,12 +45,13 @@ UserRouter.post("/signup", async (req:any, res:any) => {
             name,
             email,
             password: hashedPassword,
+            role:"admin",
         });
 
         const savedUser = await newUser.save();
 
         // Generate JWT token
-        const token = jwt.sign({ id: savedUser._id }, JWT_USER_PASSWORD as string);
+        const token = jwt.sign({ id: savedUser._id }, JWT_ADMIN_SECRET as string);
 
         return res.status(200).json({
             message: "Signup successful",
@@ -59,8 +67,8 @@ UserRouter.post("/signup", async (req:any, res:any) => {
 });
 
 // Signin route
-UserRouter.post("/signin", async (req:any, res:any) => {
-    const { success, error } = signInBody.safeParse(req.body);
+AdminRouter.post("/signin", async (req:any, res:any) => {
+    const { success, error } = adminSignin.safeParse(req.body);
 
     if (!success) {
         return res.status(400).json({
@@ -69,7 +77,7 @@ UserRouter.post("/signin", async (req:any, res:any) => {
         });
     }
 
-    const { email, password } = req.body;
+    const { email, password,adminPassword } = req.body;
 
     try {
         // Check if user exists
@@ -79,6 +87,12 @@ UserRouter.post("/signin", async (req:any, res:any) => {
             return res.status(404).json({
                 message: "User not found. Please sign up first.",
             });
+        }
+
+        if(adminPassword!==ADMIN_PASSWORD){
+            return res.status(403).json({
+                message:"WRONG ADMIN PASSWORD"
+            })
         }
 
         // Compare passwords
@@ -91,7 +105,7 @@ UserRouter.post("/signin", async (req:any, res:any) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ id: existingUser._id }, JWT_USER_PASSWORD as string);
+        const token = jwt.sign({ id: existingUser._id }, JWT_ADMIN_SECRET as string);
 
         return res.status(200).json({
             message: "Signin successful",
