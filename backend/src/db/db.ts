@@ -36,7 +36,7 @@ const PendingResourceSchema = new Schema({
 
 // Topic Schema (for DBMS, OOPS, Web Dev, etc.)
 const TopicSchema = new Schema({
-  name: { type: String, required: true }, 
+  name: { type: String, required: true,unique:true }, 
   description: { type: String }, 
   resources: [{ type: Schema.Types.ObjectId, ref: 'Resource' }], 
   createdAt: { type: Date, default: Date.now },

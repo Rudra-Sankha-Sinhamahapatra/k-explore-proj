@@ -5,6 +5,8 @@ import {  User } from "../db/db";
 import { ADMIN_SECRET as  JWT_ADMIN_SECRET } from "../config/config";
 import { adminSignin, adminSignup} from "../zod";
 import { ADMIN_PASSWORD } from "../config/config";
+import adminMiddleware from "../middlewares/admin";
+import { Topic } from "../db/db";
 
 export const AdminRouter = express.Router();
 
@@ -119,3 +121,48 @@ AdminRouter.post("/signin", async (req:any, res:any) => {
         });
     }
 });
+
+
+// POST /topics - Admins can create topics
+AdminRouter.post("/topics", adminMiddleware, async (req:any, res:any) => {
+  const { name, description } = req.body;
+
+  const topicExist = await Topic.findOne({
+   name: name
+  })
+
+  if(topicExist) {
+    return res.status(411).json({
+        message:"Topic already exists"
+    })
+  }
+  // Validate input data
+  if (!name || !description) {
+    return res.status(400).json({
+      message: "Please provide both name and description for the topic."
+    });
+  }
+
+  try {
+    // Create a new topic
+    const newTopic = new Topic({
+      name,
+      description
+    });
+
+    // Save the topic to the database
+    const savedTopic = await newTopic.save();
+
+    return res.status(201).json({
+      message: "Topic created successfully",
+      topic: savedTopic
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Internal server error",
+      error: error
+    });
+  }
+});
+
+
