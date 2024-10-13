@@ -2,8 +2,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import {  User } from "../../db/db";  
 import { JWT_SECRET as  JWT_USER_PASSWORD } from "../../config/config";
-import { signInBody, signUpBody } from "../../zod"; 
-import { UserSignup } from "../../controllers/user/signup";
+import { signInBody} from "../../zod"; 
 
 export const UserSignin = async (req:any, res:any) => {
     const { success, error } = signInBody.safeParse(req.body);
