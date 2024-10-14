@@ -24,3 +24,7 @@ export const adminSignin = z.object({
     password:z.string().min(6,"Password must be atleast 6 characters"),
     adminPassword:z.string().min(1,'at least 1 characters'),
 })
+
+export const getResources =z.object({
+    topic:z.string().min(1,"Invalid Length")
+})
