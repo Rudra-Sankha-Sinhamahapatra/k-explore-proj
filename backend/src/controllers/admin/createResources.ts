@@ -46,7 +46,8 @@ export const createResources =  async (req: any, res: any) => {
             description,
             youtubeEmbedLink: embedLink,
             topic: topic._id,
-            postedBy: req.userId
+            postedBy: req.userId,
+            topicSub:topic.name
         });
 
         const savedResource = await newResource.save();
