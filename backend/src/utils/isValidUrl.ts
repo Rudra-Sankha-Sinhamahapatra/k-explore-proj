@@ -9,7 +9,7 @@ export const isValidURL = (url: string) => {
   export async function isValidYoutubeURL(url: string) {
     try {
         const { hostname } = new URL(url);
-        if (!['youtube.com', 'www.youtube.com'].includes(hostname)) {
+        if (!['youtube.com', 'www.youtube.com','youtu.be'].includes(hostname)) {
             console.log("Invalid hostname:", hostname); // Log invalid hostname
             return false;
         }

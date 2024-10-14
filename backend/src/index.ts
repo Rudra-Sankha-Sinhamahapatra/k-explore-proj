@@ -4,7 +4,6 @@ import { router as Rootrouter } from "./routes";
 import mongoose from "mongoose";
 import { MONGODB_URL } from "./config/config";
 
-
 const app = express();
 app.use(express.json());
 app.use(cors());

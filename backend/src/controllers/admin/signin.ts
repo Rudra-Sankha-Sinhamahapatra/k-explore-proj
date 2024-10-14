@@ -18,7 +18,6 @@ export const Signin = async (req:any, res:any) => {
     const { email, password,adminPassword } = req.body;
 
     try {
-        // Check if user exists
         const existingUser = await User.findOne({ email });
 
         if (!existingUser) {
@@ -33,7 +32,6 @@ export const Signin = async (req:any, res:any) => {
             })
         }
 
-        // Compare passwords
         const isPasswordValid = await bcrypt.compare(password, existingUser.password);
 
         if (!isPasswordValid) {
@@ -42,7 +40,6 @@ export const Signin = async (req:any, res:any) => {
             });
         }
 
-        // Generate JWT token
         const token = jwt.sign({ id: existingUser._id }, JWT_ADMIN_SECRET as string);
 
         return res.status(200).json({

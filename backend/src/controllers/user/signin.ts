@@ -17,7 +17,6 @@ export const UserSignin = async (req:any, res:any) => {
     const { email, password } = req.body;
 
     try {
-        // Check if user exists
         const existingUser = await User.findOne({ email });
 
         if (!existingUser) {
@@ -26,7 +25,6 @@ export const UserSignin = async (req:any, res:any) => {
             });
         }
 
-        // Compare passwords
         const isPasswordValid = await bcrypt.compare(password, existingUser.password);
 
         if (!isPasswordValid) {
@@ -35,7 +33,6 @@ export const UserSignin = async (req:any, res:any) => {
             });
         }
 
-        // Generate JWT token
         const token = jwt.sign({ id: existingUser._id }, JWT_USER_PASSWORD as string);
 
         return res.status(200).json({

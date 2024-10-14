@@ -20,7 +20,7 @@ export const createTopic = async (req:any, res:any) => {
           message:"Topic already exists"
       })
     }
-    // Validate input data
+
     if (!name || !description || !imageUrl) {
       return res.status(400).json({
         message: "Please provide both name,description,imageUrl for the topic."
@@ -28,14 +28,12 @@ export const createTopic = async (req:any, res:any) => {
     }
   
     try {
-      // Create a new topic
       const newTopic = new Topic({
         name,
         description,
         imageUrl
       });
   
-      // Save the topic to the database
       const savedTopic = await newTopic.save();
   
       return res.status(201).json({

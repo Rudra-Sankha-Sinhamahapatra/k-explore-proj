@@ -17,7 +17,6 @@ export const UserSignup = async (req:any, res:any) => {
     const { name, email, password } = req.body;
 
     try {
-        // Check if user already exists
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
@@ -26,10 +25,8 @@ export const UserSignup = async (req:any, res:any) => {
             });
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create a new user
         const newUser = new User({
             name,
             email,
@@ -38,7 +35,6 @@ export const UserSignup = async (req:any, res:any) => {
 
         const savedUser = await newUser.save();
 
-        // Generate JWT token
         const token = jwt.sign({ id: savedUser._id }, JWT_USER_PASSWORD as string);
 
         return res.status(200).json({
