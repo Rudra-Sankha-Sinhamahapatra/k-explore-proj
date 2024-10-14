@@ -42,6 +42,7 @@ const ResourceSchema = new Schema({
   topic: { type: Schema.Types.ObjectId, ref: "Topic", required: true },
   postedBy: { type: Schema.Types.ObjectId, ref: "User", required: true },
   createdAt: { type: Date, default: Date.now },
+  topicSub: {type:String,default:""}
 });
 
 const PendingResourceSchema = new Schema({
