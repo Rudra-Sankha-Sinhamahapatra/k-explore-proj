@@ -1,9 +1,9 @@
 {
  "scripts": {
-  "build": "tsc -b",
-  "dev": "tsc -b && node dist/index.js",
-  "install": "npm install"
- },
+  "build": "tsc",
+  "start": "node dist/index.js",
+  "dev": "tsc -b && node dist/index.js" 
+},
  "dependencies": {
   "@types/bcrypt": "^5.0.2",
   "@types/cors": "^2.8.17",
