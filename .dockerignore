@@ -1,0 +1,40 @@
+# Node modules
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Build artifacts
+dist
+build
+
+# Environment files
+.env
+.env.example
+
+# Log files
+*.log
+
+# Docker files
+Dockerfile
+docker-compose.yml
+
+# Temporary files
+*.tmp
+*.temp
+
+# Git files
+.git
+.gitignore
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Vite and frontend-specific files
+frontend/node_modules
+frontend/dist
+frontend/.vite
+
+#backend files
+backend/node_modules
+backend/dist

@@ -1,0 +1,43 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend-container
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URL=mongodb://mongo:27017/my_database
+      - ADMIN_SECRET=secret
+      - JWT_SECRET=secret
+      - ADMIN_PASSWORD=secret
+    depends_on:
+      - mongo
+    volumes:
+      - ./backend:/app/backend
+    command: npm run dev --prefix ./backend
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: frontend-container
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_BACKEND=http://localhost:3000
+    volumes:
+      - ./frontend:/app/frontend
+    command: npm run dev --prefix ./frontend
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo-container
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
