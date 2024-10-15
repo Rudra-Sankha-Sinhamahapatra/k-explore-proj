@@ -1,0 +1,15 @@
+export const topics = [
+    "All",
+    "Software Engineering",
+    "Computer Networks",
+    "DBMS",
+    "COA",
+    "DSA",
+    "Web Development",
+    "Devops",
+    "System Design",
+    "Web3 Etherium",
+    "Web3 Solana Development",
+    "AI ML",
+    "App Development",
+  ];
