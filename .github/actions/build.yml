@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' 
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Build Frontend
+        run: |
+          cd frontend
+          npm run build # Running the build command for frontend
+
+      - name: Build Backend
+        run: |
+          cd backend
+          npm run build # Running the build command for backend
