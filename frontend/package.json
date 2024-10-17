@@ -11,10 +11,14 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.1.10",
+    "@types/react-toastify": "^4.0.2",
+    "@types/universal-cookie": "^2.2.0",
     "axios": "^1.7.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.27.0"
+    "react-router-dom": "^6.27.0",
+    "react-toastify": "^10.0.6",
+    "universal-cookie": "^7.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
