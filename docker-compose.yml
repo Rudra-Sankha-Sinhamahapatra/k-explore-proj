@@ -12,6 +12,8 @@ services:
       - ADMIN_SECRET=secret
       - JWT_SECRET=secret
       - ADMIN_PASSWORD=secret
+      - FRONTEND_URL = http://localhost:5173
+      - NODE_ENV = development
     depends_on:
       - mongo
     volumes:
