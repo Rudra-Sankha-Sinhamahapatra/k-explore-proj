@@ -7,10 +7,12 @@ export default function adminMiddleware(req:any, res:Response, next:NextFunction
         throw Error("No admin jwt password")
     }
 
-    const token = req.headers.token as string;
-    if(!token || token==null) {
-     throw Error("no token available");
+    const token = req.cookies.token;
+
+    if(!token || token===null) {
+        res.status(401).json({ message: "No token available" });
     }
+    try {
     const decoded = jwt.verify(token, ADMIN_SECRET);
 
     if (decoded) {
@@ -21,5 +23,8 @@ export default function adminMiddleware(req:any, res:Response, next:NextFunction
             message: "You are not signed in"
         })
     }
+}  catch (error) {
+    res.status(403).json({ message: "Invalid token" });
+}
 
 }

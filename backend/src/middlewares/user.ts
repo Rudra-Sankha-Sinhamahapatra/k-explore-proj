@@ -8,9 +8,9 @@ export function userMiddleware(req:any,res:Response,next:NextFunction) {
         throw Error("No user jwt password")
     }
 
-    const token = req.headers.token as string;
+    const token = req.cookies.token;
     if(!token || token==null) {
-     throw Error("no token available");
+      res.status(401).json({ message: "No token available" });
     }
     const decoded = jwt.verify(token,JWT_USER_PASSWORD);
 
@@ -19,7 +19,7 @@ export function userMiddleware(req:any,res:Response,next:NextFunction) {
         next();
     }
     else {
-       return res.status(403).json ( {
+      res.status(403).json ( {
             message:"You are not signed in"
         })
     }
