@@ -2,11 +2,17 @@ import express from "express"
 import cors from "cors"
 import { router as Rootrouter } from "./routes";
 import mongoose from "mongoose";
-import { MONGODB_URL } from "./config/config";
+import { FRONTEND_URL, MONGODB_URL } from "./config/config";
+import cookieParser from "cookie-parser"
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cookieParser());
+app.use(cors({
+  credentials:true,
+  origin: FRONTEND_URL || "http://localhost:5173"
+}));
+
 const PORT = 3000;
 
 app.use("/api/v1",Rootrouter);

@@ -44,7 +44,7 @@ export const isValidURL = (url: string) => {
 
 isValidYoutubeURL(url).then(isValid => {
     if (isValid) {
-        console.log("Valid YouTube URL.");
+        // console.log("Valid YouTube URL.");
     } else {
         console.log("Invalid YouTube URL.");
     }

@@ -2,8 +2,8 @@
  "scripts": {
   "build": "tsc",
   "start": "node dist/index.js",
-  "dev": "tsc -b && node dist/index.js" 
-},
+  "dev": "tsc -b && node dist/index.js"
+ },
  "dependencies": {
   "@types/bcrypt": "^5.0.2",
   "@types/cors": "^2.8.17",
@@ -11,11 +11,15 @@
   "@types/jsonwebtoken": "^9.0.7",
   "axios": "^1.7.7",
   "bcrypt": "^5.1.1",
+  "cookie-parser": "^1.4.7",
   "cors": "^2.8.5",
   "dotenv": "^16.4.5",
   "express": "^4.21.0",
   "jsonwebtoken": "^9.0.2",
   "mongoose": "^8.7.0",
   "zod": "^3.23.8"
+ },
+ "devDependencies": {
+  "@types/cookie-parser": "^1.4.7"
  }
 }
