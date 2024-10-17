@@ -15,6 +15,12 @@ app.use(cors({
 
 const PORT = 3000;
 
+app.get('/',(req:any,res:any)=>{
+  return res.status(200).json({
+      msg:"Hello World"
+  })
+})
+
 app.use("/api/v1",Rootrouter);
 
 async function main() {
