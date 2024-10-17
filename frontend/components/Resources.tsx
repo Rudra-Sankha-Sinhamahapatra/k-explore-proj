@@ -3,9 +3,9 @@ import axios from "axios";
 import { BACKEND_URL } from "../src/config";
 import { Navbar } from "./Navbar";
 import { Footer } from "../components/Footer";
-import {topics} from "./utils/topics"
-import {Resource} from "./utils/resource"
-import {ResourceCard} from "./ResourceCard"
+import { topics } from "./utils/topics";
+import { Resource } from "./utils/resource";
+import { ResourceCard } from "./ResourceCard";
 
 export const Resources = () => {
   const [resources, setResources] = useState([]);
@@ -15,7 +15,9 @@ export const Resources = () => {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        const response = await axios.get(`${BACKEND_URL}/api/v1/custom/getAllResources`); 
+        const response = await axios.get(
+          `${BACKEND_URL}/api/v1/custom/getAllResources`
+        );
         setResources(response.data.Resources);
       } catch (error) {
         console.error("Error fetching resources:", error);
@@ -48,7 +50,6 @@ export const Resources = () => {
           />
         </div>
 
-        {/* Topic Filter Dropdown */}
         <div className="max-w-7xl text-gray-900 mx-auto mt-4 p-4">
           <select
             value={selectedTopic}
@@ -62,11 +63,11 @@ export const Resources = () => {
             ))}
           </select>
         </div>
-        
+
         <div className="max-w-7xl mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredResources.length > 0 ? (
             filteredResources.map((resource: Resource, index: number) => (
-             <ResourceCard resource={resource} key={index}/>
+              <ResourceCard resource={resource} key={index} />
             ))
           ) : (
             <div className="flex text-center justify-center items-center w-full h-full">

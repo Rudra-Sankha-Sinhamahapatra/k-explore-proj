@@ -2,7 +2,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 
-export const Mobilenav = () => {
+export const Mobilenav = ({ loggedIn }: { loggedIn: boolean }) => {
   return (
     <div className="md:hidden">
       <Menu as="div" className="relative">
@@ -38,7 +38,7 @@ export const Mobilenav = () => {
                 <Link
                   to="/"
                   className={`${
-                    active ? 'bg-yellow-400 text-white' : 'text-gray-900'
+                    active ? "bg-yellow-400 text-white" : "text-gray-900"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                 >
                   Home
@@ -50,7 +50,7 @@ export const Mobilenav = () => {
                 <Link
                   to="/post"
                   className={`${
-                    active ? 'bg-yellow-400 text-white' : 'text-gray-900'
+                    active ? "bg-yellow-400 text-white" : "text-gray-900"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                 >
                   Post
@@ -62,37 +62,57 @@ export const Mobilenav = () => {
                 <Link
                   to="/resources"
                   className={`${
-                    active ? 'bg-yellow-400 text-white' : 'text-gray-900'
+                    active ? "bg-yellow-400 text-white" : "text-gray-900"
                   } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                 >
                   Resources
                 </Link>
               )}
             </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to="/signin"
-                  className={`${
-                    active ? 'bg-yellow-400 text-white' : 'text-gray-900'
-                  } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                >
-                  Sign In
-                </Link>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to="/signup"
-                  className={`${
-                    active ? 'bg-yellow-400 text-white' : 'text-gray-900'
-                  } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
-                >
-                  Sign Up
-                </Link>
-              )}
-            </Menu.Item>
+            {!loggedIn && (
+              <>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      to="/signin"
+                      className={`${
+                        active ? "bg-yellow-400 text-white" : "text-gray-900"
+                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Sign In
+                    </Link>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      to="/signup"
+                      className={`${
+                        active ? "bg-yellow-400 text-white" : "text-gray-900"
+                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Sign Up
+                    </Link>
+                  )}
+                </Menu.Item>
+              </>
+            )}
+
+            {loggedIn && (
+              <>
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      className={`${
+                        active ? "bg-yellow-400 text-white" : "text-gray-900"
+                      } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
+                    >
+                      Logout
+                    </button>
+                  )}
+                </Menu.Item>
+              </>
+            )}
           </Menu.Items>
         </Transition>
       </Menu>
