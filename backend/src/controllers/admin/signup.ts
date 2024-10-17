@@ -9,9 +9,11 @@ import { ADMIN_PASSWORD } from "../../config/config";
 export const Signup = async (req:any, res:any) => {
     const { success, error } = adminSignup.safeParse(req.body);
 
+    const errorMessages = error?.issues.map(issue => issue.message);
+
     if (!success) {
         return res.status(400).json({
-            message: "Invalid inputs. Please check your data.",
+            message: errorMessages,
             error: error?.issues,
         });
     }
@@ -46,7 +48,12 @@ export const Signup = async (req:any, res:any) => {
 
         const token = jwt.sign({ id: savedUser._id }, JWT_ADMIN_SECRET as string);
 
-        return res.status(200).json({
+        return res.status(200).cookie("token",token,{
+            httpOnly:process.env.NODE_ENV==='development'?false : true,
+            secure:process.env.NODE_ENV !== "development",
+            sameSite:process.env.NODE_ENV==='development'?"lax" : "none",
+            path:"/"
+        }).json({
             message: "Signup successful",
             user: savedUser,
             token,

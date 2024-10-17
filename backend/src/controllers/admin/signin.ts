@@ -8,9 +8,11 @@ import bcrypt from "bcrypt";
 export const Signin = async (req:any, res:any) => {
     const { success, error } = adminSignin.safeParse(req.body);
 
+    const errorMessages = error?.issues.map(issue => issue.message);
+
     if (!success) {
         return res.status(400).json({
-            message: "Invalid inputs. Please check your credentials.",
+            message: errorMessages,
             error: error?.issues,
         });
     }
@@ -42,7 +44,12 @@ export const Signin = async (req:any, res:any) => {
 
         const token = jwt.sign({ id: existingUser._id }, JWT_ADMIN_SECRET as string);
 
-        return res.status(200).json({
+        return res.status(200).cookie("token",token,{
+            httpOnly:process.env.NODE_ENV==='development'?false : true,
+            secure:process.env.NODE_ENV !== "development",
+            sameSite:process.env.NODE_ENV==='development'?"lax" : "none",
+            path:"/"
+        }).json({
             message: "Signin successful",
             user: existingUser,
             token,
